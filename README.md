@@ -1,4 +1,5 @@
 # WaitUntil
 a commandline tool to wait for special events
 
-test
+# Todo
+- Wait for file exsist
