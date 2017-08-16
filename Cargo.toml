@@ -4,3 +4,11 @@ version = "0.1.0"
 authors = ["SmuSmu"]
 
 [dependencies]
+
+[dependencies.clap]
+version = "~2.26.0"
+default-features = false
+ 
+# Cherry-pick the features you'd like to use
+# Maybe Later
+features = [  ]
