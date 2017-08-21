@@ -8,24 +8,16 @@ extern crate clap;
 use clap::{Arg, App, SubCommand};
  
 fn main() {
-    let matches = App::new("myapp")
+    let matches = App::new("WaitUntil")
                           .version("1.0")
                           .author("SmuSmu")
-                          .about("Does awesome things")
-                          .arg(Arg::with_name("config")
-                               .short("c")
-                               .long("config")
+                          .about("a commandline tool to wait for special events")
+                          .arg(Arg::with_name("fileexists")
+                               .long("fileexists")
                                .value_name("FILE")
-                               .help("Sets a custom config file")
-                               .takes_value(true))
-                          .arg(Arg::with_name("INPUT")
-                               .help("Sets the input file to use")
+                               .help("Wait until a given File exists")
                                .required(true)
-                               .index(1))
-                          .arg(Arg::with_name("v")
-                               .short("v")
-                               .multiple(true)
-                               .help("Sets the level of verbosity"))
+                               .takes_value(true))
                           .get_matches();
  
     // Same as previous example...
