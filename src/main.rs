@@ -15,10 +15,37 @@ fn main() {
                           .arg(Arg::with_name("fileexists")
                                .long("fileexists")
                                .value_name("FILE")
+                               .short("f")
                                .help("Wait until a given File exists")
                                .required(true)
                                .takes_value(true))
+                          .arg(Arg::with_name("timeout")
+                               .long("timeout")
+                               .value_name("SECONDS")
+                               .short("t")
+                               .help("Set the Timeout Value Default is 30 Seconds")
+                               .required(false)
+                               .takes_value(true))
                           .get_matches();
  
-    // Same as previous example...
+    // Start
+    if matches.is_present("timeout") {
+        if let Some(varTimeOut) = matches.value_of("timeout") {
+            println!("TimeOut setted to : {} seconds", varTimeOut);
+            }
+        }
+    else {
+        let varTimeOut = "30"; 
+        println!("Using Default Timeout of : {} seconds", varTimeOut);
+        }
+
+
+    if matches.is_present("fileexists") {
+        if let Some(varFileName) = matches.value_of("fileexists") {
+            println!("Now Waiting for file : {}", varFileName);
+            }
+        }
+    else {
+        println!("Please run me with --help to see Options");
+        }
 }
