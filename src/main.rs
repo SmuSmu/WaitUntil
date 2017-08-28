@@ -53,11 +53,20 @@ fn main() {
 
     if matches.is_present("fileexists") {
         if let Some(varFileName) = matches.value_of("fileexists") {
+            let ten_millis = std::time::Duration::from_millis(10);
             println!("Now Waiting for file : {}", varFileName);
             while time::precise_time_s() < varTimeOutTraget {
-                println!("Current Time : {} seconds", time::precise_time_s());
-                //thread::sleep(ten_millis);
+                //println!("Current Time : {} seconds", time::precise_time_s());
+                if std::path::Path::new(varFileName).exists() {
+                    println!("Found file");
+                    std::process::exit(0);
+                    }
+                
+                // Be nice to the cpu :-)
+                std::thread::sleep(ten_millis);
                 }
+            println!("Timeout exeeded");
+            std::process::exit(1);
             }
         }
     else {
