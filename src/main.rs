@@ -5,7 +5,7 @@
 // Extern Libary for command line arguments
 // Docs https://docs.rs/clap/2.26.0/clap/
 extern crate clap;
-extern crate time;
+
 use clap::{Arg, App, SubCommand};
  
 fn main() {
@@ -28,26 +28,17 @@ fn main() {
                                .required(false)
                                .takes_value(true))
                           .get_matches();
- 
-    // Start
-    //let ten_millis = time::Duration::from_millis(10);
-
-    println!("Current Time : {} seconds", time::precise_time_s());
-    println!("Current Time : {} seconds", time::precise_time_s() + 30.0 as f64);
 
     // default timeout is 30 sec
-    // Using f64 because precise_time_s() returns f64. So better for calculation later.
-    let mut varTimeOut = 30.0 as f64 ;
+    let mut varTimeOut = 30 as i64 ;
 
     if matches.is_present("timeout") {
         // get timeout value. First as String(?)
         if let Some(varArgTimeOut) = matches.value_of("timeout") {
-            // convert TimeOut to f64
-            varTimeOut = varArgTimeOut.parse::<f64>().unwrap();
+            // convert TimeOut to i64
+            varTimeOut = varArgTimeOut.parse::<i64>().unwrap();
             }
         }
-    
-    let varTimeOutTraget = time::precise_time_s() + varTimeOut;
 
     println!("Timeout is setted to : {} seconds", varTimeOut);
 
@@ -55,8 +46,10 @@ fn main() {
         if let Some(varFileName) = matches.value_of("fileexists") {
             let ten_millis = std::time::Duration::from_millis(10);
             println!("Now Waiting for file : {}", varFileName);
-            while time::precise_time_s() < varTimeOutTraget {
-                //println!("Current Time : {} seconds", time::precise_time_s());
+
+            // _ is a disposable variable to avoid debug message "warning: unused variable:"
+            // varTimeOut is multiplied by 100 because of sleep(ten_millis)
+            for _ in 0..varTimeOut*100 {
                 if std::path::Path::new(varFileName).exists() {
                     println!("Found file");
                     std::process::exit(0);
@@ -65,6 +58,7 @@ fn main() {
                 // Be nice to the cpu :-)
                 std::thread::sleep(ten_millis);
                 }
+
             println!("Timeout exeeded");
             std::process::exit(1);
             }

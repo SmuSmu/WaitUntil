@@ -4,7 +4,6 @@ version = "0.1.0"
 authors = ["SmuSmu"]
 
 [dependencies]
-time = "0.1"
 
 [dependencies.clap]
 version = "~2.26.0"
