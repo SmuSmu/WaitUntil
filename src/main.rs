@@ -6,8 +6,8 @@
 // Docs https://docs.rs/clap/2.26.0/clap/
 extern crate clap;
 
-use clap::{Arg, App, SubCommand};
- 
+use clap::{Arg, App}; // use clap::{Arg, App, SubCommand}; Maybe nice for later
+
 fn main() {
     let matches = App::new("WaitUntil")
                           .version("1.0")
